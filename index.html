@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxury Watch Memory Game</title>
+    
+    <!-- Google Fonts - Playfair Display -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+    
+    <!-- Howler.js for audio -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.4/howler.min.js"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <!-- Game container -->
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="text-center mb-8">
+            <h1 class="text-4xl font-bold mb-4" style="font-family: 'Playfair Display', serif; color: #d4af37">Luxury Watch Memory</h1>
+            <div class="flex justify-center gap-4 mb-4">
+                <div id="timer" class="text-xl">Time: 00:00</div>
+                <div id="moves" class="text-xl">Moves: 0</div>
+            </div>
+        </header>
+
+        <!-- Difficulty selector -->
+        <div id="difficulty-select" class="text-center mb-8">
+            <h2 class="text-2xl mb-4" style="font-family: 'Playfair Display', serif;">Select Difficulty</h2>
+            <div class="flex justify-center gap-4">
+                <button class="difficulty-btn bg-green-600 hover:bg-green-700 px-6 py-2 rounded" data-difficulty="easy">Easy</button>
+                <button class="difficulty-btn bg-yellow-600 hover:bg-yellow-700 px-6 py-2 rounded" data-difficulty="medium">Medium</button>
+                <button class="difficulty-btn bg-red-600 hover:bg-red-700 px-6 py-2 rounded" data-difficulty="hard">Hard</button>
+            </div>
+        </div>
+
+        <!-- Game grid -->
+        <div id="game-grid" class="grid gap-4 justify-center"></div>
+
+        <!-- Best scores -->
+        <div id="best-scores" class="mt-8 text-center">
+            <h2 class="text-2xl mb-4" style="font-family: 'Playfair Display', serif; color: #d4af37">Best Scores</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-gray-800 p-4 rounded border border-gray-700">
+                    <h3 class="text-xl mb-2">Easy</h3>
+                    <p id="easy-best">No scores yet</p>
+                </div>
+                <div class="bg-gray-800 p-4 rounded border border-gray-700">
+                    <h3 class="text-xl mb-2">Medium</h3>
+                    <p id="medium-best">No scores yet</p>
+                </div>
+                <div class="bg-gray-800 p-4 rounded border border-gray-700">
+                    <h3 class="text-xl mb-2">Hard</h3>
+                    <p id="hard-best">No scores yet</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Victory modal -->
+    <div id="victory-modal" class="fixed inset-0 bg-black bg-opacity-75 hidden flex items-center justify-center">
+        <div class="bg-gray-800 p-8 rounded-lg text-center">
+            <h2 class="text-3xl mb-4" style="font-family: 'Playfair Display', serif; color: #d4af37">Congratulations! 🎉</h2>
+            <p id="final-score" class="text-xl mb-4"></p>
+            <div id="star-rating" class="text-2xl text-yellow-400 mb-4"></div>
+            <button id="play-again" class="bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded border border-blue-500">Play Again</button>
+        </div>
+    </div>
+
+    <!-- Game scripts -->
+    <script src="js/sounds.js"></script>
+    <script src="js/ui-effects.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>
