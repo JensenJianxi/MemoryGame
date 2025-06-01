@@ -1,0 +1,502 @@
+/* Luxury Watch Memory Game Styles */
+:root {
+    /* Colors I picked from some watch sites */
+    --primary-gold: #D4AF37;
+    --secondary-gold: #FFD700;
+    --dark-gold: #996515;
+    --light-gold: #F4C430;
+    --platinum: #E5E4E2;
+    --royal-blue: #002366;
+    --burgundy: #800020;
+    --black: #1A1A1A;
+    --white: #FFFFFF;
+    
+    /* Shadows and stuff */
+    --card-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    --hover-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+    --text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    --gold-gradient: linear-gradient(45deg, var(--dark-gold), var(--primary-gold), var(--light-gold));
+    --metallic-edge: linear-gradient(to right, transparent, var(--secondary-gold), transparent);
+}
+
+/* Base stuff */
+body {
+    margin: 0;
+    padding: 20px;
+    min-height: 100vh;
+    font-family: 'Playfair Display', serif; /* fancy font for luxury feel */
+    background: linear-gradient(135deg, var(--royal-blue), var(--black));
+    color: var(--white);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Game title area */
+.game-header {
+    text-align: center;
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+h1 {
+    font-size: 3em;
+    color: var(--primary-gold);
+    text-shadow: var(--text-shadow);
+    margin: 0 0 10px 0;
+    letter-spacing: 2px;
+}
+
+/* Stats display */
+.game-stats {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 20px 0;
+    font-size: 1.2em;
+}
+
+.stat {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px 20px;
+    border-radius: 15px;
+    backdrop-filter: blur(5px);
+}
+
+/* Difficulty buttons */
+.difficulty-controls {
+    margin: 20px 0;
+}
+
+.difficulty-btn {
+    background: transparent;
+    color: var(--white);
+    border: 2px solid var(--primary-gold);
+    padding: 10px 25px;
+    margin: 0 10px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 25px;
+    font-family: inherit;
+}
+
+.difficulty-btn:hover {
+    background: var(--primary-gold);
+    transform: translateY(-2px);
+    box-shadow: var(--hover-shadow);
+}
+
+/* Game board */
+.game-container {
+    perspective: 2000px; /* 3D effect for cards */
+    margin: 20px auto;
+}
+
+#game-grid {
+    display: grid;
+    gap: 20px;
+    padding: 20px;
+    justify-content: center;
+}
+
+/* Card styles */
+.card {
+    width: 160px;
+    height: 220px;
+    position: relative;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transition: all 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+.card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    box-shadow: var(--card-shadow);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+/* Front of card */
+.card-front {
+    background: var(--white);
+    transform: rotateY(180deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 50%, #ffffff 100%);
+}
+
+/* Fancy border effect - had to fix webkit mask */
+.card-front::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 2px solid transparent;
+    border-radius: 15px;
+    background: var(--gold-gradient);
+    -webkit-mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+    mask: 
+        linear-gradient(#fff 0 0) content-box, 
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+/* Back of card */
+.card-back {
+    background: var(--gold-gradient);
+    border: 2px solid var(--secondary-gold);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Watch icon watermark */
+.card-back::before {
+    content: "⌚";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 4em;
+    color: rgba(255, 255, 255, 0.1);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Pattern overlay */
+.card-back::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 10px,
+            rgba(255, 255, 255, 0.05) 10px,
+            rgba(255, 255, 255, 0.05) 20px
+        );
+    border-radius: 15px;
+}
+
+/* Watch brand logos */
+.brand-logo {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+    transition: transform 0.3s ease;
+}
+
+.card:hover .brand-logo {
+    transform: scale(1.05);
+}
+
+/* Card shine effect */
+.card-shine {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.8),
+        transparent
+    );
+    animation: shine 0.7s ease-out;
+    pointer-events: none;
+}
+
+@keyframes shine {
+    to {
+        left: 200%;
+    }
+}
+
+/* Matched card effect */
+.matched {
+    animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        box-shadow: 
+            0 0 5px var(--secondary-gold),
+            0 0 10px var(--secondary-gold),
+            0 0 15px var(--primary-gold),
+            0 0 20px rgba(212, 175, 55, 0.5);
+    }
+    to {
+        box-shadow: 
+            0 0 10px var(--secondary-gold),
+            0 0 20px var(--secondary-gold),
+            0 0 30px var(--primary-gold),
+            0 0 40px rgba(212, 175, 55, 0.5);
+    }
+}
+
+/* Edge shine */
+.card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--metallic-edge);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    border-radius: 15px;
+}
+
+.card:hover::after {
+    opacity: 0.5;
+}
+
+/* Sparkle animation */
+.sparkle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: var(--secondary-gold);
+    border-radius: 50%;
+    animation: sparkle 1s ease-in-out forwards;
+}
+
+@keyframes sparkle {
+    0% {
+        transform: scale(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.5) rotate(180deg);
+        opacity: 0;
+    }
+}
+
+/* Victory popup */
+#victory-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+#victory-modal.visible {
+    opacity: 1;
+}
+
+.modal-content {
+    background: linear-gradient(135deg, var(--royal-blue), var(--black));
+    border: 3px solid var(--primary-gold);
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    position: relative;
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+    max-width: 500px;
+    width: 90%;
+}
+
+#victory-modal.visible .modal-content {
+    transform: translateY(0);
+}
+
+/* Star rating */
+#star-rating {
+    margin: 20px 0;
+}
+
+.star {
+    font-size: 2em;
+    color: var(--secondary-gold);
+    margin: 0 5px;
+    opacity: 0;
+    animation: starReveal 0.5s ease forwards;
+}
+
+@keyframes starReveal {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Trophy animation */
+.trophy {
+    font-size: 4em;
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%) scale(0);
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.trophy.show {
+    transform: translateX(-50%) scale(1);
+}
+
+/* Confetti effect */
+.confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    transform-origin: center;
+    animation: confettiFall linear forwards;
+}
+
+@keyframes confettiFall {
+    0% {
+        transform: translateY(-100vh) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* Tooltips */
+.tooltip {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.8);
+    color: var(--white);
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.9em;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.tooltip.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* High scores */
+.best-scores {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.best-score-card {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+    text-align: center;
+    min-width: 200px;
+}
+
+.best-score-card h3 {
+    color: var(--primary-gold);
+    margin: 0 0 10px 0;
+}
+
+/* Mobile tweaks */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+
+    .game-stats {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .difficulty-controls {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .difficulty-btn {
+        margin: 5px 0;
+    }
+
+    #game-grid {
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .card {
+        width: 120px;
+        height: 165px;
+    }
+}
+
+/* Page load animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.game-header,
+.game-stats,
+.difficulty-controls,
+.game-container {
+    animation: fadeIn 0.8s ease-out forwards;
+} 
